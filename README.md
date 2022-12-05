@@ -41,7 +41,7 @@ const obj = bigNumberify(JSON.parse(jsonStr));
 ## History
 
 **0.0.3**
-- Ignore object that look like a BigNumber but they are not
+- Ignore objects that look like a BigNumber, but they are not
 
 **0.0.2**
 - No real change. Just a better README
