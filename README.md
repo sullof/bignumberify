@@ -51,7 +51,7 @@ const obj = bigNumberify(JSON.parse(jsonStr));
 
 ## TODO
 
-- Add support for different formats
+- Add support for other formats
 
 ## License
 
