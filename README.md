@@ -1,12 +1,23 @@
 # bigNumberify
 
-**A simple filter to rebuild correctly big numbers while parsing JSON strings**
+**A simple parser to correctly rebuild objects containing big numbers while parsing JSON strings**
 
 ## Intro
 
-Managing transactions and results of query to smart contracts, ofter you get a JSON string that encodes any Big Number. When you parse it, `JSON.parse` does not revert the big numbers correctly, and you cannot use them :-(
+Managing transactions and results of query to smart contracts, you get a JSON string that encodes some Big Number in a format like
 
-**bigNumberify** does the job for you.
+```json
+{
+  "bn": {
+    "type": "BigNumber",
+    "hex": "0x32"
+  }
+}
+```
+
+If you JSON.parse it, the property `bn` won't be a BigNumber :(
+
+**bigNumberify** fixes the issue fixing all the BigNumber objects inside the JSON.
 
 ## Usage
 
@@ -16,6 +27,11 @@ Use with
 const bigNumberify = require("bignumberify")
 const obj = bigNumberify(JSON.parse(jsonStr))
 ```
+
+## History
+
+**0.0.1**
+- First version
 
 ## License
 
