@@ -49,6 +49,10 @@ const obj = bigNumberify(JSON.parse(jsonStr));
 **0.0.1**
 - First version
 
+## TODO
+
+- Add support for different formats
+
 ## License
 
 MIT
