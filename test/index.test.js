@@ -50,4 +50,23 @@ describe("bigNumberify", async function () {
     assert.isTrue(ethers.BigNumber.isBigNumber(good));
     assert.equal(good.toString(), "50");
   });
+
+  it("should skip not-real BigNumber in the JSON", async function () {
+    let jsonStr = JSON.stringify(obj);
+    let bad = JSON.parse(jsonStr);
+
+    bad.e[0] = {
+      type: "BigNumber",
+      hex: "some wrong stuff"
+    }
+
+    let good = bigNumberify(bad);
+    assert.isTrue(ethers.BigNumber.isBigNumber(good.h));
+
+    assert.equal(good.b.c.toString(), "10");
+    assert.equal(good.e[0].hex, "some wrong stuff");
+    assert.equal(good.e[1].f.toString(), "30");
+    assert.equal(good.e[1].g[5].toString(), "40");
+    assert.equal(good.h.toString(), "50");
+  });
 });

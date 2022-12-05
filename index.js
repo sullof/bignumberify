@@ -7,10 +7,18 @@ function bigNumberify(obj) {
   const isBN = (bn) => {
     return bn.type === "BigNumber" && bn.hex && Object.keys(bn).length === 2;
   };
+  const convert = (bn) => {
+    try {
+      bn = ethers.BigNumber.from(bn.hex);
+    } catch(e) {
+      // if it looks like a BigNumber but it is not
+    }
+    return bn;
+  }
   const manage = (item, i) => {
     if (isObject(item[i])) {
       if (isBN(item[i])) {
-        item[i] = ethers.BigNumber.from(item[i].hex);
+        item[i] = convert(item[i]);
       } else {
         item[i] = bigNumberify(item[i]);
       }
@@ -24,7 +32,7 @@ function bigNumberify(obj) {
     }
   } else if (isObject(obj)) {
     if (isBN(obj)) {
-      obj = ethers.BigNumber.from(obj.hex);
+      obj = convert(obj);
     } else
       for (let i in obj) {
         try {
