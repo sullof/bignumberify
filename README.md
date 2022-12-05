@@ -21,14 +21,27 @@ If you JSON.parse it, the property `bn` won't be a BigNumber :(
 
 ## Usage
 
-Use with
+In a Node app load as
 
 ```
-const bigNumberify = require("bignumberify")
-const obj = bigNumberify(JSON.parse(jsonStr))
+const bigNumberify = require("bignumberify");
+```
+
+In a ES6 app, load as 
+
+```
+import {bigNumberify} from "bignumberify";
+```
+
+Use as
+```
+const obj = bigNumberify(JSON.parse(jsonStr));
 ```
 
 ## History
+
+**0.0.2**
+- No real change. Just a better README
 
 **0.0.1**
 - First version
