@@ -69,4 +69,17 @@ describe("bigNumberify", async function () {
     assert.equal(good.e[1].g[5].toString(), "40");
     assert.equal(good.h.toString(), "50");
   });
+
+  it("should recover if used as a reviver function", async function () {
+    let jsonStr = JSON.stringify(obj);
+
+    let good = JSON.parse(jsonStr, bigNumberify);
+    assert.isTrue(ethers.BigNumber.isBigNumber(good.h));
+
+    assert.equal(good.b.c.toString(), "10");
+    assert.equal(good.e[0].toString(), "20");
+    assert.equal(good.e[1].f.toString(), "30");
+    assert.equal(good.e[1].g[5].toString(), "40");
+    assert.equal(good.h.toString(), "50");
+  });
 });

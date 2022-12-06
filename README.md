@@ -33,12 +33,19 @@ In a ES6 app, load as
 import {bigNumberify} from "bignumberify";
 ```
 
-Use as
+To parse an object
 ```
-const obj = bigNumberify(JSON.parse(jsonStr));
+const obj = bigNumberify(inputObj);
+```
+or as a reviver function
+``` 
+const obj = JSON.parse(jsonStr, bigNumberify);
 ```
 
 ## History
+
+**0.0.4**
+- Can now be used as a reviver function
 
 **0.0.3**
 - Ignore objects that look like a BigNumber, but they are not

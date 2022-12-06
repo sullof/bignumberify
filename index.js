@@ -1,20 +1,29 @@
 const ethers = require("ethers");
 
-function bigNumberify(obj) {
+function convert(bn) {
+  try {
+    bn = ethers.BigNumber.from(bn.hex);
+  } catch(e) {
+    // if it looks like a BigNumber but it is not
+  }
+  return bn;
+}
+
+function bigNumberify(key, value) {
+  if (typeof key === 'object') {
+    return scan(key)
+  } else {
+    return (typeof value === "object" && value.type === "BigNumber" && !!value.hex ? convert(value) : value);
+  }
+}
+
+function scan(obj) {
   const isObject = (o) => {
     return typeof o === "object" && o !== null && !!Object.keys(o).length;
   };
   const isBN = (bn) => {
     return bn.type === "BigNumber" && bn.hex && Object.keys(bn).length === 2;
   };
-  const convert = (bn) => {
-    try {
-      bn = ethers.BigNumber.from(bn.hex);
-    } catch(e) {
-      // if it looks like a BigNumber but it is not
-    }
-    return bn;
-  }
   const manage = (item, i) => {
     if (isObject(item[i])) {
       if (isBN(item[i])) {
@@ -42,5 +51,7 @@ function bigNumberify(obj) {
   }
   return obj;
 }
+
+
 
 module.exports = bigNumberify;
