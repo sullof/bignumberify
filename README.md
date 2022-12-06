@@ -27,33 +27,44 @@ In a Node app load as
 const bigNumberify = require("bignumberify");
 ```
 
-In a ES6 app, load as 
+In a ES6 app, load as
 
 ```
 import {bigNumberify} from "bignumberify";
 ```
 
 To parse an object
+
 ```
 const obj = bigNumberify(inputObj);
 ```
+
 or as a reviver function
-``` 
+
+```
 const obj = JSON.parse(jsonStr, bigNumberify);
 ```
 
 ## History
 
+**0.0.5**
+
+- It is now able to manage as a reviver function single values
+
 **0.0.4**
+
 - Can now be used as a reviver function
 
 **0.0.3**
+
 - Ignore objects that look like a BigNumber, but they are not
 
 **0.0.2**
+
 - No real change. Just a better README
 
 **0.0.1**
+
 - First version
 
 ## TODO

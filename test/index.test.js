@@ -57,8 +57,8 @@ describe("bigNumberify", async function () {
 
     bad.e[0] = {
       type: "BigNumber",
-      hex: "some wrong stuff"
-    }
+      hex: "some wrong stuff",
+    };
 
     let good = bigNumberify(bad);
     assert.isTrue(ethers.BigNumber.isBigNumber(good.h));
@@ -81,5 +81,17 @@ describe("bigNumberify", async function () {
     assert.equal(good.e[1].f.toString(), "30");
     assert.equal(good.e[1].g[5].toString(), "40");
     assert.equal(good.h.toString(), "50");
+  });
+
+  it("should manage a single big number as reviver", async function () {
+    let jsonStr = JSON.stringify(obj2);
+    let good = bigNumberify(jsonStr, bigNumberify);
+    assert.isTrue(ethers.BigNumber.isBigNumber(good));
+    assert.equal(good.toString(), "50");
+
+    let num = 1.4;
+    jsonStr = JSON.stringify(num);
+    good = bigNumberify(jsonStr, bigNumberify);
+    assert.equal(good, 1.4);
   });
 });
