@@ -30,7 +30,7 @@ const bigNumberify = require("bignumberify");
 In a ES6 app, load as
 
 ```
-import {bigNumberify} from "bignumberify";
+import bigNumberify from "bignumberify";
 ```
 
 To parse an object
@@ -46,6 +46,10 @@ const obj = JSON.parse(jsonStr, bigNumberify);
 ```
 
 ## History
+
+**0.0.6**
+
+- No real change. Just a fix in the README
 
 **0.0.5**
 
