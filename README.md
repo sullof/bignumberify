@@ -49,7 +49,7 @@ const obj = JSON.parse(jsonStr, bigNumberify);
 
 **0.0.5**
 
-- It is now able to manage as a reviver function single values
+- It is now able to manage single values as a reviver function
 
 **0.0.4**
 
