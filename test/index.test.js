@@ -1,26 +1,31 @@
-const { assert } = require("chai");
-const { ethers } = require("ethers");
+const {assert} = require("chai");
+const {ethers} = require("ethers");
 
 const bigNumberify = require("..");
 
 describe("bigNumberify", async function () {
-  let obj = {
-    a: 2,
-    b: {
-      c: ethers.BigNumber.from("10"),
-      d: "Some string",
-    },
-    e: [
-      ethers.BigNumber.from("20"),
-      {
-        f: ethers.BigNumber.from("30"),
-        g: [0, 1, 2, 3, 4, ethers.BigNumber.from("40"), 6],
-      },
-    ],
-    h: ethers.BigNumber.from("50"),
-  };
 
-  let obj2 = ethers.BigNumber.from("50");
+  let obj;
+  let obj2;
+
+  beforeEach(async function () {
+    obj = {
+      a: 2,
+      b: {
+        c: ethers.BigNumber.from("10"),
+        d: "Some string",
+      },
+      e: [
+        ethers.BigNumber.from("20"),
+        {
+          f: ethers.BigNumber.from("30"),
+          g: [0, 1, 2, 3, 4, ethers.BigNumber.from("40"), 6],
+        },
+      ],
+      h: ethers.BigNumber.from("50"),
+    }
+    obj2 = obj.h;
+  })
 
   it("should recover all the big numbers", async function () {
     let jsonStr = JSON.stringify(obj);
@@ -68,6 +73,15 @@ describe("bigNumberify", async function () {
     assert.equal(good.e[1].f.toString(), "30");
     assert.equal(good.e[1].g[5].toString(), "40");
     assert.equal(good.h.toString(), "50");
+  });
+
+  it("should stringify BigInt items and parse them back", async function () {
+    obj.x = 125000n;
+    let jsonStr = JSON.stringify(obj, bigNumberify.stringify, 2);
+
+    let good = JSON.parse(jsonStr, bigNumberify);
+
+    assert.equal(typeof good.x, "bigint");
   });
 
   it("should recover if used as a reviver function", async function () {

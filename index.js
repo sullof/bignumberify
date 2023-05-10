@@ -5,12 +5,17 @@ function isObject(o) {
 }
 
 function isBN(bn) {
-  return bn.type === "BigNumber" && bn.hex && Object.keys(bn).length === 2;
+  const result = Object.keys(bn).length === 2 && (bn.type === "BigNumber" || bn.type === "BigInt") && /^0x(?:[a-fA-F0-9]{2})*$/.test(bn.hex || "");
+  return result;
 }
 
 function convert(bn) {
   try {
-    bn = ethers.BigNumber.from(bn.hex);
+    if (bn.type === "BigNumber") {
+      return ethers.BigNumber.from(bn.hex);
+    } else if (bn.type === "BigInt") {
+      return BigInt(bn.hex);
+    }
   } catch (e) {}
   return bn;
 }
@@ -26,13 +31,28 @@ function bigNumberify(key, value) {
   } else if (typeof key === "object") {
     return scan(key);
   } else {
-    return typeof value === "object" &&
-      value.type === "BigNumber" &&
-      !!value.hex
+    return typeof value === "object" && isBN(value)
       ? convert(value)
       : value;
   }
 }
+
+function stringify(key, value) {
+  if (typeof value === "bigint") {
+    // Change the key and value if the person is alive
+    let hex = value.toString(16);
+    if (hex.length % 2) {
+      hex = '0' + hex;
+    }
+    return 'status', {
+      type: "BigInt",
+      hex: '0x' + hex,
+    };
+  }
+  return value;
+}
+
+bigNumberify.stringify = stringify;
 
 function scan(obj) {
   const manage = (item, i) => {
