@@ -19,7 +19,7 @@ If you JSON.parse it, the property `bn` won't be a BigNumber :(
 
 **bigNumberify** fixes the issue fixing all the BigNumber objects inside the JSON.
 
-#### Starting from v0.0.7, **bigNumberify** also supports BigInt.
+_Starting from v0.0.7, **bigNumberify** also supports BigInt._
 
 ## Usage
 
